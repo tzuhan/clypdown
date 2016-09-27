@@ -7,7 +7,7 @@ import sys
 
 def download(mp3_url, title):
     filename = "%s.mp3" %(title)
-    print "{*} Saving file to %s" %(filename)
+    print ("{*} Saving file to %s" %(filename))
     try:
         r = requests.get(url=mp3_url, stream=True)
         with open(filename, 'wb') as f:
@@ -16,23 +16,23 @@ def download(mp3_url, title):
                 if chunk:
                     f.write(chunk)
                     f.flush()
-    except Exception, e:
-        print "{-} Something has gone horribly wrong! Please report on the github issue tracker with the following backtrace: \n%s" %(e)
-    print "{*} Done!"
-    
+    except Exception as e:
+        print ("{-} Something has gone horribly wrong! Please report on the github issue tracker with the following backtrace: \n%s" %(e))
+    print ("{*} Done!")
+
 def get_mp3_url(url):
     content_id = url.replace("https://clyp.it/", "")
     try:
-        r = requests.get(url="https://api.clyp.it/%s" %(content_id))    
-    except Exception, e:
-        print "{-} Something has gone horribly wrong! Please report on the github issue tracker with the following backtrace: \n%s" %(e)
+        r = requests.get(url="https://api.clyp.it/%s" %(content_id))
+    except Exception as e:
+        print ("{-} Something has gone horribly wrong! Please report on the github issue tracker with the following backtrace: \n%s" %(e))
     fucking_json = json.loads(r.text)
     song_title = fucking_json['Title']
     mp3_url = fucking_json['Mp3Url']
     if fucking_json['Status'] == "DownloadDisabled":
-        print "{i} Uploader has disabled downloading. Who fucking cares."
-    print "{*} Got song title: %s" %(song_title)
-    print "{*} Got mp3 url: %s" %(mp3_url)
+        print ("{i} Uploader has disabled downloading. Who fucking cares.")
+    print ("{*} Got song title: %s" %(song_title))
+    print ("{*} Got mp3 url: %s" %(mp3_url))
     return song_title, mp3_url
 
 def main(args):
